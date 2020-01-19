@@ -1,16 +1,24 @@
-CC = gcc
-RM = rm
+# 指令编译器和选项
+CC=gcc
+CFLAGS=-Wall -std=gnu99
  
-CFLAGS += -D _SAYHELLO\
-		  -D _SAYHEHE
+# 目标文件
+TARGET=test
+SRCS = test.c \
+  ./test-add/test-add.c \
+  ./test-sub/test-sub.c
  
-TARGETS := me
+INC = -I./test-add -I./test-sub
  
-all:$(TARGETS)
+OBJS = $(SRCS:.c=.o)
  
-$(TARGETS):main.c
-	$(CC) $(CFLAGS) $^ -o $@
+$(TARGET):$(OBJS)
+#	@echo TARGET:$@
+#	@echo OBJECTS:$^
+	$(CC) -o $@ $^
  
 clean:
-	-$(RM) -f *.o
-	-$(RM) -f $(TARGETS)
+	rm -rf $(TARGET) $(OBJS)
+ 
+%.o:%.c
+	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
