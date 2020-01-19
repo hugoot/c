@@ -1,6 +1,8 @@
 #include <stdio.h>
-#include <test-add.h>
-#include <test-sub.h>
+#include "test-add.h"
+// #include "test-sub.h"
+// #include "test-sub\test-sub.h"
+#include "F:\k3\c\test-sub\test-sub.h"
 int main(void)
 {
     int a = 3;
