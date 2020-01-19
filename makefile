@@ -13,22 +13,28 @@ CFLAGS=-Wall -std=gnu99\
 \来增加一行方便看 注释也可以用\多写一行
 #target是生成的文件名 srcs是用的函数所有c文件都要写
 
-TARGET=test
+TARGET=a
 SRCS = test.c \
-	test-add\test-add.c  \
-	test-sub\test-sub.c
+	func2\func2.c  \
+	func1\func1.c
 	# ./test-sub/test-sub.c
   #   ./test-add/test-add.c \
   
 #这里是如果想要用成系统的头文件<>，就在inc下面类似这样加\
 不仅是主目录c文件调用 其他此目录调用也可以只在这里加一次就行 
 #文件夹目录的相对路径 也是可以不用写./ 有没有空格都可以通过\
-这里是test-add.c引用头文件用了<test-add.h>所以这里要加
+这里是test-add.c引用头文件用了<test-add.h>所以这里要加\
+这里还是要写的 这个工具的相对目录是指根目录的相对目录\
+不是打开文件的相对目录 在非目录的c文件加相对目录会错的，在这里填好文件夹 在非主目录直接加头文件就OK了
 
-INC =-I test-add
+
+
+INC = -I func2
+# -I test-add
 # -I./test-add 
 # -I./test-sub
 OBJS = $(SRCS:.c=.o)
+OBJ = obj
  
 $(TARGET):$(OBJS)
 #	@echo TARGET:$@
