@@ -56,7 +56,7 @@ void add(void)
 //说明这种通过形参（是派生数据类型中的指针类型）直接传值（指针传递,引用传递）是可以的 对于基本类型来说要传进去基本类型的地址& 
 
 //--------------------------从1到n----------------
-unsigned int c =123456;
+unsigned int c =1211;
 // 从最前面 最后面插入3
 // printf(",c*10+3:%d\n",c*10+3);
 // printf(",c+3*1000000:%d\n",c+3*1000000);
@@ -99,8 +99,11 @@ unsigned int d=0;
 // printf("digit(c):%d\n",digit(c));
 // printf(",digit(000):%d\n",digit(011));
 
-Arithmetictypes_add_1to2(c,0,110,&d);
+// Arithmetictypes_add_1to2(c,0,110,&d);
 // printf("Arithmetictypes_add_1to2,:%d\n",Arithmetictypes_add_1to2(c,7,7,&d));
+// digit(c);
+Arithmetictypes_add_special_0to1(c,1,3,one_assignment,44,&d);
+printf("d:%d\n",d);
 
 }
 
@@ -134,12 +137,14 @@ int digit(int x)
         if((x/10!=0)||(x%10!=0)){//判断是否已经取完
             dig[i]=x%10;
             x=x/10;
-            // printf("%d\n",dig[i]);
+            printf("%d\n",dig[i]);
+            
         }
         else break;
     }
     dig[i]=-1;
     // return dig;
+
     return i;
 }
 
@@ -225,3 +230,123 @@ printf(":others\n");
 
 //以后写传入的不用指针* 会改变外部变量的才用*，但是别人都用*呢。。
 //可是我这样写确实能区分传入和传出啊，同用指针就区分不了了
+
+
+//往基本数据类型特殊形式1后面的（后面开始算起）第一个位置加入1个基本数据类型整型2
+
+
+//这里这个因为是根据特殊形式找的，没有说特定的起始或者终止位置开始写
+//找的是匹配位置。所以从第一个开始，特定的位置有起始终止的概念所有从0开始写,好吧，起始是我懒了懒得融在一起了，以后尽量用1开始..
+/**
+ * @brief 往特殊形式的1/n个指定位置（基本数据类型整型，只能是1个现在）
+          的后面加入1/n数据类型（整型），并且有两种模式，一种从开始匹配位后面全部插入   
+          ，另一种仅在匹配位后面插入。
+ * @param[in] 被插数  
+ * @param[in] 匹配的数（目前只能是个位）
+ * @param[in] 匹配到的第几个数开始插入或仅插入（从后面看起，1开始）
+ * @param[in] 匹配模式（仅插入一次模式，全插入模式）
+ * @param[in] 插入数
+ * @param[out] 赋值
+ *
+ * @return 状态
+ */
+
+
+int Arithmetictypes_add_special_0to1(int aa,int bb,int cc,int dd,int ee,int *y)
+{   
+    
+    printf(":Arithmetictypes_add_special_0to1\n");
+    if ((0) >=aa || 0> bb || 0>=cc || 0>=ee)
+    {
+    printf("if: >=aa || 0> bb || 0>=cc\n");
+    printf("return state: input_err\n");
+    return input_err;
+    }
+
+    if ((one_assignment !=dd) &&(Infrontofall_assignment !=dd ))
+    {
+    printf("if:one_assignment||Infrontofall_assignment !=dd \n");
+    printf("return state: input_err\n");
+    return input_err;
+    }
+    // static int dig[100]={0},i=0;printf("return state: input_err\n");
+    int x =aa;
+    int a =0;
+    int c =1;
+    int d =0;
+    int dig[100]={0},i=0;
+    for(i=0;;i++){//循环，取出各位上的数字
+        if((x/10!=0)||(x%10!=0)){//判断是否已经取完
+            dig[i]=x%10;
+            x=x/10;
+            printf("%d\n",dig[i]);
+        }
+        else break;
+    }
+    dig[i]=-1;
+    // return dig;
+    for(i=0;;i++)
+    {
+        if ((-1) !=dig[i])
+        {
+        printf("if:-1!=dig[i]\n");
+                if ((bb) ==dig[i])
+            {
+            printf("if:1==dig[i]\n");
+            if ((one_assignment) ==dd)
+            {
+            printf("if:one_assignment==dd\n");
+              // // 仅第二个1后面赋值
+                 if ((cc) !=c++)
+            {
+            printf("if:2==cc\n");
+            continue;
+            }    
+            }
+            // 第二个1打后全部都赋值
+            else if ((Infrontofall_assignment) ==dd)
+            {
+            printf("if:Infrontofall_assignment==cc\n");
+            if ((cc) !=c)
+            {
+            printf("if:2==cc\n");
+            c++;
+            continue;
+            }      
+            }
+        
+            Arithmetictypes_add_1to2(aa,i+a,ee,&aa);
+            a=a+digit(ee);
+        
+            //只是第一次需要额外操作，后面都不用想想怎么写比较好，这样写还得定义个变量，麻烦
+            }
+            else 
+            {
+            printf(":no found\n");
+            d++;
+            printf(",d:%d\n",d);
+            }
+        }
+        else  break;
+ 
+    }
+    if ((d) == digit(aa))
+    {
+    printf("if:d==digit(aa)\n");
+    printf("return state: match_notfind\n");
+    return match_notfind;
+    }
+    else 
+    {
+    printf(":others\n");
+    *y =aa;
+    printf(",*y:%d\n",*y);
+    printf("return state: match_find\n");
+    return match_find;
+    }
+  
+    // printf(",dig[3]:%d\n",dig[3]);
+    // printf(",dig[8]:%d\n",dig[8]);
+    //dig[8]=-1 原来这种写法dig[100]={0} 后面没赋值的都是等于-1 如果是只初始化dig[100]，里面的值都是随机值
+    // return i;
+}
