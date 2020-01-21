@@ -61,13 +61,13 @@ unsigned int c =123456;
 // printf(",c*10+3:%d\n",c*10+3);
 // printf(",c+3*1000000:%d\n",c+3*1000000);
 //正数第2，倒数第2位插入3
-printf(",c*10+3:%d\n", (c-c%10+3)*10+c%10);
-printf("c:%d\n",c%100000+3*100000+(c/100000*1000000));
+// printf(",c*10+3:%d\n", (c-c%10+3)*10+c%10);
+// printf("c:%d\n",c%100000+3*100000+(c/100000*1000000));
 //(c/100000*100000) 原来这里低位有数C是会变的..我们理解上不会变 但c语言会把后面小数约去
 
 //正数第3，倒数第3位插入3 感觉以后就23位实验算了 1可能会+0隐藏一些规律
-printf(",c-c100-c10:%d\n",((c-c%100)/10+3)*100+c%100);
-printf("c:%d\n",c%10000+3*10000+(c/10000*100000));
+// printf(",c-c100-c10:%d\n",((c-c%100)/10+3)*100+c%100);
+// printf("c:%d\n",c%10000+3*10000+(c/10000*100000));
 
 // 加多个数33 正数第2，倒数第2位插入33
 //其实这也可以理解为取出每一个数 然后1个1个加嘛..取出每一个数属于什么操作？ 应该属于同类型改 只不过是改的不是自己 改的是同类型的中间数据类型（整型）
@@ -97,7 +97,9 @@ unsigned int d=0;
 // printf(",c-c100-c10:%d\n",((d-d%100)/10+3)*100+d%100);
  
 // printf("digit(c):%d\n",digit(c));
-Arithmetictypes_add_1to2(c,-1,3,&d);
+// printf(",digit(000):%d\n",digit(011));
+
+Arithmetictypes_add_1to2(c,0,110,&d);
 // printf("Arithmetictypes_add_1to2,:%d\n",Arithmetictypes_add_1to2(c,7,7,&d));
 
 }
@@ -162,6 +164,21 @@ int digit(int x)
 //以后的返回值都写返回运行状态，什么改变一个值，传入一个值都通过形参！
 
 
+
+/**
+ * @brief 增加（插入）一个个位数CC到aa数的bb位置，并且赋值输出到dd
+ *
+ * @param[in]  aa   被增（插入）数
+ * @param[in]  bb   插入的位置 最后一位为0，前面+1
+ * @param[in]  cc   插入数 ！不可以由0开头
+ * @param[out]   dd     输出结果
+ *
+ * @return input_err  输入位置大于被插入数的位数长度或者小于0
+ * @return input_err  插入数CC小于0
+ * @return input_success    成功得到dd（输出结果）
+ */
+
+
 int Arithmetictypes_add_1to2(int aa,int bb,int cc,int *dd)
 {       
 
@@ -178,23 +195,28 @@ int Arithmetictypes_add_1to2(int aa,int bb,int cc,int *dd)
 //    printf(",c-c100-c10:%d\n",((d-d%100)/10+3)*100+d%100);
 
 printf(",digit(aa) :%d\n",digit(aa));
+printf(",digit(cc) :%d\n",digit(cc));
 
-if ((digit(aa)) <bb || bb<0)
+if ((digit(aa)) <bb || bb<0 ||cc<0)
 {
-printf("if:digit(aa)<bb\n");
+printf("(digit(aa)) <bb || bb<0 ||cc<0\n");
 printf("return state: input_err\n");
 return input_err;
 }
 else if (bb == 0)
 {
+    //cc插入数等于0的时候 diggit cc多少位数会变成0位 
+    //可是两个00呢，如果+1仍然只会当1位..得转换为字符串才可以解决了
+    //试试纯粹用整型看看能不能解决，应该是解决不了了..竟然发现一个大问题
+    //011是判断只有一位的，000是0位，0开头都是有点问题..这里感觉就是数据类型的根本问题咯，我解决不了
 printf(":0\n");
-*dd=aa*10+cc;
+*dd=aa*pow(10,digit(cc))+cc;
 printf(",*dd:%d\n",*dd);
 }
 else 
 {
 printf(":others\n");
-    *dd=((aa-aa%(int)pow(10,bb))/(int)pow(10,bb-1)+cc)*(int)pow(10,bb)+aa%(int)pow(10,bb); 
+    *dd=((aa-aa%(int)pow(10,bb))/(int)pow(10,bb-1)*pow(10,digit(cc)-1)+cc)*(int)pow(10,bb)+aa%(int)pow(10,bb); 
     printf("*dd:%d\n",*dd);
 }
    printf("return state: input_success\n");
