@@ -16,7 +16,9 @@ CFLAGS=-Wall -std=gnu99\
 TARGET=a
 SRCS = test.c \
 	func2\func2.c  \
-	func1\func1.c
+	func1\func1.c	\
+	derived_type\derived_type.c\
+	in_out\in_out.c
 	# ./test-sub/test-sub.c
   #   ./test-add/test-add.c \
   
@@ -29,7 +31,9 @@ SRCS = test.c \
 
 
 
-INC = -I func2
+INC = -I func2\
+	-I derived_type\
+	-I in_out
 # -I test-add
 # -I./test-add 
 # -I./test-sub

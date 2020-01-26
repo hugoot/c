@@ -15,6 +15,8 @@ int digit(int x);
 int Arithmetictypes_add_1to2(int aa,int bb,int cc,int *dd);
 int Arithmetictypes_add_special_0to1(int aa,int bb,int cc,int dd,int ee,int *y);
 static void itoa1 (int n,char s[]);
+
+
 typedef enum
 {
 input_err =0,
